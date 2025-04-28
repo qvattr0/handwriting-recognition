@@ -1,3 +1,5 @@
 # Introduction
 
-A simple 3-layer machine learning model for identifying handwritten digits. Utilizes a backpropagation algorithm.
+A project attempting to implement multiple machine learning algorithms for identifying handwritten digits. The architectures include:
+- Multi-layer Perceptron
+- 
