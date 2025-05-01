@@ -21,12 +21,9 @@ class Network(object):
         """        
         self.num_layers = len(sizes)
         self.layer_sizes = sizes
-        self.weights = [np.random.randn(sizes[:-1]), np.random.rand(sizes[1:])]
-        self.biases = np.random.randn(sizes[1:], 1)
-        # TODO: generalize the definition of weights and biases to work on networks with more than 3 layers
+        self.weights = [np.random.randn(y, x) for y, x in zip(sizes[:-1], sizes[1:])]
+        self.biases =  [np.random.randn(x, 1) for x in sizes[1:]]
 
-        # neuron activation function
-        # necessary for using backpropagation as the sigmoid function is differentiable, unlike the alternatively used step function
         def sigmoid(z):
             """Simple sigmoid function to be used as the activation function of each neuron in the network
                Necessary for using backpropagation as the sigmoid function is differentiable, unlike the 
@@ -52,6 +49,8 @@ class Network(object):
             """            
             for w, b in zip(self.weights, self.biases):
                 response = sigmoid(w @ input_data + b)
+                # ! w MUST be a matrix, otherwise the operation will throw an error
+                # NOTE: is this even an issue? one could wonder whether having a network with a single input neuron is even useful
             return response
 
 
