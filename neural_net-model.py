@@ -39,18 +39,18 @@ class Network(object):
         return 1/(1 + np.exp(-z))
     
     def feedforward(self, input_data):
-        """Calculates the output of the network when input_data is fed into it
+        """Calculates the output of the network when activation input `a` is fed into it
 
         Args:
-            input_data (array): data array representing input into the network
+            a (array): data array representing input into the network
 
         Returns:
             array: response of the network
         """            
         for w, b in zip(self.weights, self.biases):
-            response = self.sigmoid(w @ input_data + b)
+            a = self.sigmoid(w @ a + b)
             # ! w MUST be a matrix, otherwise the operation will throw an error
             # NOTE: is this even an issue? one could wonder whether having a network with a single input neuron is even useful
-        return response
+        return a
         
         
