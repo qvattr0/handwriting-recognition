@@ -31,26 +31,39 @@ class Network(object):
             alternatively used step function.
 
         Args:
-            z (array or int): input integer or array of integers
+            z (int): input integer or array of integers
 
         Returns:
-            array or int: result of the sigmoid function
+            int: result of the sigmoid function
         """            
         return 1/(1 + np.exp(-z))
     
-    def feedforward(self, input_data):
-        """Calculates the output of the network when activation input `a` is fed into it
+    @staticmethod
+    def sigmoid_prime(z):
+        """The derivative of the sigmoid activation function
 
         Args:
-            a (array): data array representing input into the network
+            z (int): values for which the function is computed
 
         Returns:
-            array: response of the network
-        """            
+            int: result of the function
+        """        
+        return np.exp(-z)/(1 + np.exp(-z))**2
+    
+    def feedforward(self, input_data):
+        """Calculates the output of the network when input `input_data` is fed into it
+
+        Args:
+            input (array[int]): data array representing input into the network
+
+        Returns:
+            array[int]: response of the network
+        """
+        activ = input_data # setting the input as the activation signal
+
+        # repeats until the activation signal traverses the network        
         for w, b in zip(self.weights, self.biases):
-            a = self.sigmoid(w @ a + b)
+            activ = self.sigmoid(w @ activ + b)
             # ! w MUST be a matrix, otherwise the operation will throw an error
             # NOTE: is this even an issue? one could wonder whether having a network with a single input neuron is even useful
-        return a
-        
-        
+        return activ
