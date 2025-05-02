@@ -39,3 +39,7 @@ Thumbs.db
 # Visual Studio Code files #
 ############################
 .vscode/
+
+# Folders #
+###########
+data/
