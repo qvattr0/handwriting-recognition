@@ -70,7 +70,15 @@ class Network(object):
         return activ
     
     def backprop(self, activ, expected):
-        
+        """The backpropagation algorithm for propagating the output layer error through all the layers of the network. 
+
+        Args:
+            activ (int): activation of the output layer
+            expected (int): expected activations based on the labels of training data
+
+        Returns:
+            int: a gradient field for both weights and biases to be used for adjusting them
+        """
         # setting up the matrices for storing the gradient field of weights and biases
         grad_b = [np.zeros(b.shape) for b in self.biases]
         grad_w = [np.zeros(w.shape) for w in self.weights]
