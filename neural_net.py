@@ -46,8 +46,9 @@ class Network(object):
 
         Returns:
             int: result of the function
-        """        
-        return self.sigmoid(z) * (1 - self.sigmoid(z))
+        """
+        sig = self.sigmoid(z)        
+        return sig * (1 - sig)
     
     def feedforward(self, input_data):
         """Calculates the output of the network when input `input_data` is fed into it
