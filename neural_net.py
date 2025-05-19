@@ -8,7 +8,7 @@ image_res = 28*28
 # Neural network abstraction
 class Network(object):
 
-    def __init__(self, sizes):     
+    def __init__(self, struct):     
         """Neural network initialization constructor
 
         Args:
@@ -19,10 +19,10 @@ class Network(object):
         Returns:
             Network: a network object for storing neural network's parameters
         """        
-        self.num_layers = len(sizes)
-        self.layer_sizes = sizes
-        self.weights = [np.random.randn(y, x) for y, x in zip(sizes[:-1], sizes[1:])]
-        self.biases =  [np.random.randn(x, 1) for x in sizes[1:]]
+        self.num_layers = len(struct)
+        self.layer_sizes = struct
+        self.weights = [np.random.randn(y, x) for y, x in zip(struct[:-1], struct[1:])]
+        self.biases =  [np.random.randn(x, 1) for x in struct[1:]]
 
     @staticmethod
     def sigmoid(z):
