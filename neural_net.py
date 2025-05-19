@@ -38,9 +38,7 @@ class Network(object):
         """            
         return 1/(1 + np.exp(-z))
     
-    @staticmethod
-    # TODO: rewrite in terms of sigmoid() to improve computational efficiency
-    def sigmoid_prime(z):
+    def sigmoid_prime(self, z):
         """The derivative of the sigmoid activation function
 
         Args:
@@ -49,7 +47,7 @@ class Network(object):
         Returns:
             int: result of the function
         """        
-        return np.exp(-z)/(1 + np.exp(-z))**2
+        return self.sigmoid(z) * (1 - self.sigmoid(z))
     
     def feedforward(self, input_data):
         """Calculates the output of the network when input `input_data` is fed into it
