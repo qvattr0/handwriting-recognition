@@ -125,9 +125,9 @@ class Network(object):
         # summing all the batch gradient field to output one unified gradient field
         unified_w = []
         unified_b = []
-        for w, b in grad_w, grad_b:
-            unified_w.append(np.einsum("lkb->lk", w))
-            unified_b.append(np.einsum("lb->l", b))
+        for w, b in zip(grad_w, grad_b):
+            unified_w.append(np.einsum("lkb->lk", w) / len(batch))
+            unified_b.append(np.einsum("lb->l", b) / len(batch))
 
         grad_w = unified_w
         grad_b = unified_b
