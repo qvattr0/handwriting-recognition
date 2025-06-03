@@ -1,5 +1,7 @@
 import numpy as np
-
+import random
+from colorama import Fore, Style
+from typing import Optional
 
 # Input data parameters
 image_res = 28*28
@@ -133,3 +135,48 @@ class Network(object):
         grad_b = unified_b
 
         return (grad_w, grad_b)
+    
+    def stochasticGD(self, epochs: int, batch_size: int, training_data: list[tuple[list[int],list[int]]], learning_rate: int, 
+                     test_data: Optional[list[tuple[list[int], list[int]]]] = None) -> None:
+        """
+        Performs *stochastic gradient descent* based on the parameter gradient fields obtained from the backpropagation algorithm and **updates the weights and
+        biases of the network** based on the descent.
+
+        **Args**:
+            epochs (int): the number of training epochs to perform
+            batch_size (int): the size of a single mini-batch
+            training_data (list[tuple[int]]): at list of tuples consisting of the training data and associated labels
+            learning_rate (int): the rate at which gradient descent should be performed. Mathematically referred to as eta.
+            test_data (list[tuple[int]], optional): Testing data to evaluate the network against. At the end of each epoch, the network's accuracy is evaluated
+            and printed to the terminal. Defaults to None.
+        """        
+        # separating the images and labels for ideal feeding into backprop
+        training_images, training_labels = zip(*training_data)
+        training_images = list(training_images)
+        training_labels = list(training_labels)
+
+        # warn the user about unused data in case of a suboptimal batch size selection
+        unused_data = len(training_data) % batch_size
+        if unused_data > 0:
+            print(Fore.RED + "WARNING:" + Style.RESET_ALL + " due to the selected batch size, " + str(unused_data)
+                + " units of training data have not been used.")
+
+        for epoch in range(epochs):
+            # simulates picking random training data samples for mini-batching
+            random.shuffle(training_images)
+
+            # generating the mini-batches
+            mini_batches = []
+            divs = np.floor(len(training_images)/batch_size)
+            for i in range(divs):
+                i = i - 1
+                mini_batches.append(training_data[batch_size * i: batch_size * (i + 1)])
+
+            for mini_batch in mini_batches:
+                gradient_w, gradient_b = self.backprop(mini_batch, training_labels)
+
+                # updating weights and biases based on gradient fields
+                self.weights = [w - (learning_rate/len(mini_batch)) * gw
+                                for w, gw in zip(self.weights, gradient_w)]
+                self.biases  = [b - (learning_rate/len(mini_batch)) * gb
+                                for b, gb in zip(self.biases, gradient_b)]
