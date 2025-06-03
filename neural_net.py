@@ -136,6 +136,13 @@ class Network(object):
 
         return (grad_w, grad_b)
     
+    def evaluate(self, test_data):
+        test_results = [(np.argmax(self.feedforward(x)), y) for (x, y) in test_data]
+        total_pass   = sum(int(x == y) for (x, y) in test_results)
+        accuracy     = total_pass/len(test_data)
+
+        return total_pass, accuracy
+
     def stochasticGD(self, epochs: int, batch_size: int, training_data: list[tuple[list[int],list[int]]], learning_rate: int, 
                      test_data: Optional[list[tuple[list[int], list[int]]]] = None) -> None:
         """
