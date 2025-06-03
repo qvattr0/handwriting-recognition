@@ -77,7 +77,7 @@ class Network(object):
 
         Args:
             batch (int): activation matrix of the input layer. Each element of batch is a single training data unit that consists of activations for the neuron
-            of the input layer. Can accept multiple input activations stored in a single matrix at once. 
+                of the input layer. Can accept multiple input activations stored in a single matrix at once. 
             expected (int): expected activations matrix based on the labels of training data
 
         Returns:
@@ -139,16 +139,16 @@ class Network(object):
     def stochasticGD(self, epochs: int, batch_size: int, training_data: list[tuple[list[int],list[int]]], learning_rate: int, 
                      test_data: Optional[list[tuple[list[int], list[int]]]] = None) -> None:
         """
-        Performs *stochastic gradient descent* based on the parameter gradient fields obtained from the backpropagation algorithm and **updates the weights and
+        Performs *stochastic gradient descent* based on the parameter gradient fields obtained from the backpropagation algorithm and **updates the weights and 
         biases of the network** based on the descent.
 
-        **Args**:
+        Args:
             epochs (int): the number of training epochs to perform
             batch_size (int): the size of a single mini-batch
-            training_data (list[tuple[int]]): at list of tuples consisting of the training data and associated labels
+            training_data (list[tuple[list[int], list[int]]]): at list of tuples consisting of the training data and associated labels
             learning_rate (int): the rate at which gradient descent should be performed. Mathematically referred to as eta.
-            test_data (list[tuple[int]], optional): Testing data to evaluate the network against. At the end of each epoch, the network's accuracy is evaluated
-            and printed to the terminal. Defaults to None.
+            test_data (list[tuple[int]], optional): Testing data to evaluate the network against. 
+                At the end of each epoch, the network's accuracy is evaluated and printed to the terminal. Defaults to None.
         """        
         # separating the images and labels for ideal feeding into backprop
         training_images, training_labels = zip(*training_data)
