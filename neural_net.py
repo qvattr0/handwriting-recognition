@@ -23,7 +23,7 @@ class Network(object):
         """        
         self.num_layers = len(struct)
         self.layer_sizes = struct
-        self.weights = [np.random.randn(y, x) for y, x in zip(struct[:-1], struct[1:])]
+        self.weights = [np.random.randn(y, x) for y, x in zip(struct[1:], struct[:-1])]
         self.biases =  [np.random.randn(x, 1) for x in struct[1:]]
 
     @staticmethod
