@@ -71,7 +71,7 @@ class Network(object):
             # NOTE: is this even an issue? one could wonder whether having a network with a single input neuron is even useful
         return activ
     
-    def backprop(self, batch, expected):
+    def backprop(self, training_sample, expected):
         """The backpropagation algorithm for propagating the output layer error through all the layers of the network and outputting gradient fields for weights
         and biases of the network.
 
@@ -86,24 +86,24 @@ class Network(object):
         """
         # setting up the matrices for storing the gradient fields of weights and biases
         # each entry within
-        grad_w = [np.zeros((*w.shape, len(batch))) for w in self.weights]
-        grad_b = [np.zeros((*b.shape, len(batch))) for b in self.biases]
+        grad_w = [np.zeros((*w.shape, len(training_sample))) for w in self.weights]
+        grad_b = [np.zeros((*b.shape, len(training_sample))) for b in self.biases]
 
-        activs = [batch] # stores the activations of each neuron per layer
+        activs = [training_sample] # stores the activations of each neuron per layer
         z = [] # stores the weighted inputs in each neural layer
 
         # feed the input image into the input layer and push it through 
         for w, b in zip(self.weights, self.biases) :
     
             # need to expand b to apply to all training data units
-            b = np.broadcast_to(b, (b.shape[0], batch.shape[1]))
+            b = np.broadcast_to(b, (b.shape[0], training_sample.shape[1]))
 
             # calculate the z of the current layer
-            weighted_in = w.T @ batch + b
+            weighted_in = w.T @ training_sample + b
             z.append(weighted_in)
 
-            batch = self.sigmoid(weighted_in)
-            activs.append(batch)
+            training_sample = self.sigmoid(weighted_in)
+            activs.append(training_sample)
 
         # now, activations of all the neurons are known
 
