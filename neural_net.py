@@ -99,7 +99,7 @@ class Network(object):
             b = np.broadcast_to(b, (b.shape[0], training_sample.shape[1]))
 
             # calculate the z of the current layer
-            weighted_in = w.T @ training_sample + b
+            weighted_in = w @ training_sample + b
             z.append(weighted_in)
 
             training_sample = self.sigmoid(weighted_in)
