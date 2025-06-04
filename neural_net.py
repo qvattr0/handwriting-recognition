@@ -156,10 +156,6 @@ class Network(object):
             test_data (list[tuple[int]], optional): Testing data to evaluate the network against. 
                 At the end of each epoch, the network's accuracy is evaluated and printed to the terminal. Defaults to None.
         """        
-        # separating the images and labels for ideal feeding into backprop
-        training_images, training_labels = zip(*training_data)
-        training_images = list(training_images)
-        training_labels = list(training_labels)
 
         # warn the user about unused data in case of a suboptimal batch size selection
         unused_data = len(training_data) % batch_size
@@ -169,7 +165,12 @@ class Network(object):
 
         for epoch in range(epochs):
             # simulates picking random training data samples for mini-batching
-            random.shuffle(training_images)
+            random.shuffle(training_data)
+
+            # separating the images and labels for ideal feeding into backprop
+            training_images, training_labels = zip(*training_data)
+            training_images = list(training_images)
+            training_labels = list(training_labels)
 
             # generating the mini-batches
             mini_batches = []
