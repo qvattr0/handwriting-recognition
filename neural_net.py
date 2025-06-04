@@ -76,13 +76,12 @@ class Network(object):
         and biases of the network.
 
         Args:
-            batch (int): activation matrix of the input layer. Each element of batch is a single training data unit that consists of activations for the neuron
-                of the input layer. Can accept multiple input activations stored in a single matrix at once. 
-            expected (int): expected activations matrix based on the labels of training data
+            training_sample (np.ndarray): activation matrix of the input layer with shape (input_layer_size, batch_size). Each column is a training data unit.
+            expected (np.ndarray): expected activations matrix based on the labels of training data with shape (output_layer_size, batch_size).
 
         Returns:
-            grad_w (int): gradient field for weights
-            grad_b (int): gradient field for biases
+            grad_w (list[np.ndarray]): gradient field for weights, each with shape matching corresponding weight matrix.
+            grad_b (list[np.ndarray]): gradient field for biases, each with shape matching corresponding bias vector.
         """
         # setting up the matrices for storing the gradient fields of weights and biases
         # each entry within
