@@ -168,15 +168,17 @@ class Network(object):
 
             # generating the mini-batches
             mini_batches = []
-            divs = np.floor(len(training_data) // batch_size) # integer division
+            divs = len(training_data) // batch_size # integer division defaults to the floor, which is what we need
             for i in range(divs): 
                 mini_batches.append(training_data[batch_size * i: batch_size * (i + 1)])
 
             for mini_batch in mini_batches:
                 # separating the images and labels for ideal feeding into backprop
+                # also converting them into matrices where each image is a row
+                # NOTE conventionally, each training sample is supposed to be a column so keep that in mind for the future
                 training_images, training_labels = zip(*mini_batch)
-                training_images = list(training_images)
-                training_labels = list(training_labels)
+                training_images = np.column_stack(list(training_images))
+                training_labels = np.column_stack(list(training_labels))
 
                 gradient_w, gradient_b = self.backprop(training_images, training_labels)
 
