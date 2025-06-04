@@ -41,8 +41,6 @@ def load_data():
     y_train = y_train_onehot
     y_test  = y_test_onehot
     
-
     training_data = (X_train, y_train)
     testing_data  = (X_test, y_test)
     return training_data, testing_data
-
