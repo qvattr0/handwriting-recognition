@@ -167,19 +167,19 @@ class Network(object):
             # simulates picking random training data samples for mini-batching
             random.shuffle(training_data)
 
-            # separating the images and labels for ideal feeding into backprop
-            training_images, training_labels = zip(*training_data)
-            training_images = list(training_images)
-            training_labels = list(training_labels)
-
             # generating the mini-batches
             mini_batches = []
-            divs = np.floor(len(training_images)/batch_size)
+            divs = np.floor(len(training_data) // batch_size) # integer division
             for i in range(divs): 
                 mini_batches.append(training_data[batch_size * i: batch_size * (i + 1)])
 
             for mini_batch in mini_batches:
-                gradient_w, gradient_b = self.backprop(mini_batch, training_labels)
+                # separating the images and labels for ideal feeding into backprop
+                training_images, training_labels = zip(*mini_batch)
+                training_images = list(training_images)
+                training_labels = list(training_labels)
+
+                gradient_w, gradient_b = self.backprop(training_images, training_labels)
 
                 # updating weights and biases based on gradient fields
                 self.weights = [w - (learning_rate/len(mini_batch)) * gw
