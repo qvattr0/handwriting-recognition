@@ -175,8 +175,7 @@ class Network(object):
             # generating the mini-batches
             mini_batches = []
             divs = np.floor(len(training_images)/batch_size)
-            for i in range(divs):
-                i = i - 1
+            for i in range(0, divs - 1): 
                 mini_batches.append(training_data[batch_size * i: batch_size * (i + 1)])
 
             for mini_batch in mini_batches:
