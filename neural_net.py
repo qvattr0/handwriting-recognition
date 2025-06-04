@@ -127,8 +127,8 @@ class Network(object):
         unified_w = []
         unified_b = []
         for w, b in zip(grad_w, grad_b):
-            unified_w.append(np.einsum("lkb->lk", w) / len(batch))
-            unified_b.append(np.einsum("lb->l", b) / len(batch))
+            unified_w.append(np.einsum("lkb->lk", w) / len(training_sample))
+            unified_b.append(np.einsum("lb->l", b) / len(training_sample))
 
         grad_w = unified_w
         grad_b = unified_b
@@ -191,8 +191,7 @@ class Network(object):
             # epoch complete, print message
             if test_data:
                 total_pass, accuracy = self.evaluate(test_data)
-                print(f"Epoch {epoch}: {total_pass} / {len(test_data)} passed! Accuracy: {accuracy*100}%")
+                print(f"Epoch {epoch}: {total_pass}/{len(test_data)} ! Accuracy: {accuracy*100:.2f}%")
 
             else:
                 print(f"Epoch {epoch} complete!")
-            
