@@ -7,3 +7,4 @@
   * Could implement a validation stage that uses a subset of the training data to roughly determine a decent starting selection of starting weights and biases
 - [ ] Is it possible to optimize learning rate selection?
 - [ ] Investigate alternative activation functions that may be more suitable for the task
+- [ ] Rename the `training_images` and `training_labels` to `sample` and `labels` for increased clarity
