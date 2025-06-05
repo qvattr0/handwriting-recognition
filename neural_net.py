@@ -142,8 +142,9 @@ class Network(object):
 
         return total_pass, accuracy
 
-    def stochasticGD(self, epochs: int, batch_size: int, training_data: list[tuple[list[int],list[int]]], learning_rate: int, 
-                     test_data: Optional[list[tuple[list[int], list[int]]]] = None) -> None:
+    def stochasticGD(self, epochs: int, batch_size: int, learning_rate: float, 
+                     training_data: list[tuple[list[int],list[int]]],
+                     test_data: Optional[list[tuple[list[list[int]], list[int]]]] = None) -> None:
         """Performs *stochastic gradient descent* based on the parameter gradient fields obtained from the backpropagation algorithm and **updates the weights and 
         biases of the network** based on the descent.
 
