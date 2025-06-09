@@ -85,8 +85,9 @@ class Network(object):
         """
         # setting up the matrices for storing the gradient fields of weights and biases
         # each entry within
-        grad_w = [np.zeros((*w.shape, len(training_sample))) for w in self.weights]
-        grad_b = [np.zeros((*b.shape, len(training_sample))) for b in self.biases]
+        batch_size = training_sample.shape[1]
+        grad_w = [np.zeros((*w.shape, batch_size)) for w in self.weights]
+        grad_b = [np.zeros((*b.shape, batch_size)) for b in self.biases]
 
         activs = [training_sample] # stores the activations of each neuron per layer
         z = [] # stores the weighted inputs in each neural layer
@@ -95,7 +96,7 @@ class Network(object):
         for w, b in zip(self.weights, self.biases) :
     
             # need to expand b to apply to all training data units
-            b = np.broadcast_to(b, (b.shape[0], training_sample.shape[1]))
+            b = np.broadcast_to(b, (b.shape[0], batch_size))
 
             # calculate the z of the current layer
             weighted_in = w @ training_sample + b
@@ -127,8 +128,8 @@ class Network(object):
         unified_w = []
         unified_b = []
         for w, b in zip(grad_w, grad_b):
-            unified_w.append(np.einsum("lkb->lk", w) / len(training_sample))
-            unified_b.append(np.einsum("lb->l", b) / len(training_sample))
+            unified_w.append(np.einsum("lkb->lk", w) / batch_size)
+            unified_b.append(np.einsum("lb->l", b) / batch_size)
 
         grad_w = unified_w
         grad_b = unified_b
