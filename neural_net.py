@@ -186,7 +186,7 @@ class Network(object):
                 # updating weights and biases based on gradient fields
                 self.weights = [w - (learning_rate/len(mini_batch)) * gw
                                 for w, gw in zip(self.weights, gradient_w)]
-                self.biases  = [b - (learning_rate/len(mini_batch)) * gb
+                self.biases  = [b - (learning_rate/len(mini_batch)) * gb.reshape(b.shape)
                                 for b, gb in zip(self.biases, gradient_b)]
         
             # epoch complete, print message
