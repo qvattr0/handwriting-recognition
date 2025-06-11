@@ -129,7 +129,7 @@ class Network(object):
         unified_b = []
         for w, b in zip(grad_w, grad_b):
             unified_w.append(np.einsum("lkb->lk", w) / batch_size)
-            unified_b.append(np.einsum("lb->l", b) / batch_size)
+            unified_b.append(np.einsum("lb->l", b)   / batch_size)
 
         grad_w = unified_w
         grad_b = unified_b
