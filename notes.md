@@ -5,6 +5,7 @@
 - ~~The accuracy of the model is abysmal. Another issue seems to be the fact that having larger batch sizes results in even worse performance while the latter should be the case. There may be a link between the starting the degree of accuracy and the batch_size. Figure out what's going on.~~
   - The issue was indeed associated with the batch size usage in calculations. Averaging was mistakenly done twice, resulting in compounding inaccuracy effect as a result of dividing the unified weights and biases matrix twice instead of just once.
 - ~~The amount of accuracy increase per epoch seems to decrease as well based on the size of the batch (larger, lower). What the hell is going on?~~ See prior item
+- Increasing the number of neurons in the hidden layer increases compute time along with decreasing accuracy. Investigate.
 
 # Improvements
 - [ ] Find a way to better determine initial weights and biases
