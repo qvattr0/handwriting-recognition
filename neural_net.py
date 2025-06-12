@@ -137,7 +137,7 @@ class Network(object):
         return (grad_w, grad_b)
     
     def evaluate(self, test_data):
-        test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
+        test_results = [(np.argmax(self.feedforward(x)), y) for (x, y) in test_data]
         total_pass   = sum(int(x == y) for (x, y) in test_results)
         accuracy     = total_pass/len(test_data)
 
