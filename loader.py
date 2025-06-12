@@ -31,13 +31,7 @@ def load_data():
         blank[y] = 1
         y_train_onehot.append(blank)
 
-    for y in y_test:
-        blank = [0] * 10
-        blank[y] = 1
-        y_test_onehot.append(blank)
-
     y_train = y_train_onehot
-    y_test  = y_test_onehot
     
     training_data = list(zip(X_train, y_train))
     testing_data  = list(zip(X_test, y_test))
