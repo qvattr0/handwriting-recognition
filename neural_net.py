@@ -185,9 +185,9 @@ class Network(object):
                 gradient_w, gradient_b = self.backprop(training_images, training_labels)
 
                 # updating weights and biases based on gradient fields
-                self.weights = [w - (learning_rate/len(mini_batch)) * gw
+                self.weights = [w - (learning_rate) * gw
                                 for w, gw in zip(self.weights, gradient_w)]
-                self.biases  = [b - (learning_rate/len(mini_batch)) * gb.reshape(b.shape)
+                self.biases  = [b - (learning_rate) * gb.reshape(b.shape)
                                 for b, gb in zip(self.biases, gradient_b)]
         
             # epoch complete, print message
