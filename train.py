@@ -1,7 +1,7 @@
 from neural_net import Network
 import loader
 
-net = Network([784, 50, 10])
+net = Network([784, 30, 10])
 
 training_data, testing_data = loader.load_data()
 
