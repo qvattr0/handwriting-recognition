@@ -80,8 +80,9 @@ class Network(object):
             expected (np.ndarray): expected activations matrix based on the labels of training data with shape (output_layer_size, batch_size).
 
         Returns:
-            grad_w (list[np.ndarray]): gradient field for weights, each with shape matching corresponding weight matrix.
-            grad_b (list[np.ndarray]): gradient field for biases, each with shape matching corresponding bias vector.
+            tuple:
+                grad_w (list[np.ndarray]): gradient field for weights, each with shape matching the corresponding weight matrix.
+                grad_b (list[np.ndarray]): gradient field for biases, each with shape matching the corresponding bias vector.
         """
         # setting up the matrices for storing the gradient fields of weights and biases
         # each entry within
