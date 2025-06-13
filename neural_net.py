@@ -137,6 +137,17 @@ class Network(object):
         return (grad_w, grad_b)
     
     def evaluate(self, test_data):
+        """Evaluate network output for an input image given the currently set weights and biases, and compare the obtained result against the associated label.
+        If the test data is composed of multiple test samples, the function also computes the accuracy of the network.
+
+        Args:
+            test_data (list[tuple(list[int], int)]): a list of tuples consisting of image testing data and associated labels
+
+        Returns:
+            tuple:
+                total_pass (int): number of images correctly identified from the test data pool.
+                accuracy (float): percent accuracy of the network at identifying the correct label of a testing sample.
+        """      
         test_results = [(np.argmax(self.feedforward(x)), y) for (x, y) in test_data]
         total_pass   = sum(int(x == y) for (x, y) in test_results)
         accuracy     = total_pass/len(test_data)
