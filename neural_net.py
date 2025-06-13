@@ -176,6 +176,7 @@ class Network(object):
             print(Fore.RED + "WARNING:" + Style.RESET_ALL + " due to the selected batch size, " + str(unused_data)
                 + " units of training data have not been used.")
 
+        epoch_accuracies = []
         for epoch in range(epochs):
             # simulates picking random training data samples for mini-batching
             random.shuffle(training_data)
@@ -206,6 +207,13 @@ class Network(object):
             if test_data:
                 total_pass, accuracy = self.evaluate(test_data)
                 print(f"Epoch {epoch}: {total_pass}/{len(test_data)} ! Accuracy: {accuracy*100:.2f}%")
+                epoch_accuracies.append(accuracy)
 
             else:
                 print(f"Epoch {epoch} complete!")
+
+        # once all the epochs were computed, find the epoch with the highest accuracy
+        best_epoch = np.argmax(epoch_accuracies)
+        best_acc   = epoch_accuracies[best_epoch]
+        
+        print(f"-> Highest accuracy of {best_acc*100:.2f}% achieved in Epoch {best_epoch+1}")
