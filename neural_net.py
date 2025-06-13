@@ -1,5 +1,7 @@
 import numpy as np
 import random
+import time
+
 from colorama import Fore, Style
 from typing import Optional
 
@@ -178,6 +180,7 @@ class Network(object):
 
         epoch_accuracies = []
         for epoch in range(epochs):
+            epoch_start = time.perf_counter()
             # simulates picking random training data samples for mini-batching
             random.shuffle(training_data)
 
@@ -205,8 +208,17 @@ class Network(object):
         
             # epoch complete, print message
             if test_data:
+                epoch_end  = time.perf_counter()
+                training_duration = epoch_end - epoch_start
+
                 total_pass, accuracy = self.evaluate(test_data)
-                print(f"Epoch {epoch}: {total_pass}/{len(test_data)} ! Accuracy: {accuracy*100:.2f}%")
+
+                print(f"Epoch {epoch + 1}")
+                print(f"├─ Correct: {total_pass}/{len(test_data)}")
+                print(f"├─ Accuracy: {accuracy*100:.2f}%")
+                print(f"└─ Training Duration: {training_duration:.2f}s")
+                print("\n")
+
                 epoch_accuracies.append(accuracy)
 
             else:
@@ -216,4 +228,5 @@ class Network(object):
         best_epoch = np.argmax(epoch_accuracies)
         best_acc   = epoch_accuracies[best_epoch]
         
+        print("---------------------------------------------")
         print(f"-> Highest accuracy of {best_acc*100:.2f}% achieved in Epoch {best_epoch+1}")
