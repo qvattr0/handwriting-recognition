@@ -228,5 +228,5 @@ class Network(object):
         best_epoch = np.argmax(epoch_accuracies)
         best_acc   = epoch_accuracies[best_epoch]
         
-        print("---------------------------------------------")
+        print("--------------------------------------------------")
         print(f"-> Highest accuracy of {best_acc*100:.2f}% achieved in Epoch {best_epoch+1}")
