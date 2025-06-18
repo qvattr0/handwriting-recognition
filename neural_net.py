@@ -83,8 +83,8 @@ class Network(object):
 
         Returns:
             tuple:
-                grad_w (list[np.ndarray]): gradient field for weights, each with shape matching the corresponding weight matrix.
-                grad_b (list[np.ndarray]): gradient field for biases, each with shape matching the corresponding bias vector.
+                - grad_w (list[np.ndarray]): gradient field for weights, each with shape matching the corresponding weight matrix.
+                - grad_b (list[np.ndarray]): gradient field for biases, each with shape matching the corresponding bias vector.
         """
         # setting up the matrices for storing the gradient fields of weights and biases
         # each entry within
@@ -148,8 +148,8 @@ class Network(object):
 
         Returns:
             tuple:
-                total_pass (int): number of images correctly identified from the test data pool.
-                accuracy (float): percent accuracy of the network at identifying the correct label of a testing sample.
+                - total_pass (int): number of images correctly identified from the test data pool.
+                - accuracy (float): percent accuracy of the network at identifying the correct label of a testing sample.
         """      
         test_results = [(np.argmax(self.feedforward(x)), y) for (x, y) in test_data]
         total_pass   = sum(int(x == y) for (x, y) in test_results)
