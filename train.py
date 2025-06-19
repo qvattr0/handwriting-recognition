@@ -1,6 +1,5 @@
 from neural_net import Network
 import loader
-import os
 
 training_data, testing_data = loader.load_data()
 
