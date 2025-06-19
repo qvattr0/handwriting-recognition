@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import h5py
+import copy
 import time
 
 from colorama import Fore, Style
@@ -186,8 +187,10 @@ class Network(object):
         if unused_data > 0:
             print(Fore.RED + "WARNING:" + Style.RESET_ALL + " due to the selected batch size, " + str(unused_data)
                 + " units of training data have not been used.")
-
+        
+        param_history    = []
         epoch_accuracies = []
+
         for epoch in range(epochs):
             epoch_start = time.perf_counter()
             # simulates picking random training data samples for mini-batching
@@ -215,13 +218,12 @@ class Network(object):
                 self.biases  = [b - (learning_rate) * gb.reshape(b.shape)
                                 for b, gb in zip(self.biases, gradient_b)]
         
-            # epoch complete, print message
+            # epoch complete, perform final tasks and print message
+            epoch_end  = time.perf_counter()
+            training_duration = epoch_end - epoch_start
+            self.compute_time += training_duration
+
             if test_data:
-                epoch_end  = time.perf_counter()
-                training_duration = epoch_end - epoch_start
-                self.compute_time += training_duration
-
-
                 total_pass, accuracy = self.evaluate(test_data)
 
                 print(f"Epoch {epoch + 1}")
@@ -235,12 +237,19 @@ class Network(object):
             else:
                 print(f"Epoch {epoch} complete!")
 
+            # save the parameters computed this epoch
+            param_history.append((copy.deepcopy(self.weights), copy.deepcopy(self.biases)))
+
         # once all the epochs were computed, find the epoch with the highest accuracy
         best_epoch = np.argmax(epoch_accuracies)
         best_acc   = epoch_accuracies[best_epoch]
-
+        
         # save the best accuracy for future use
         self.best_acc = best_acc
+
+        # change the parameter-state of the network to that of the best epoch
+        self.weights, self.biases = param_history[best_epoch]
+
         
         print("--------------------------------------------------")
         print(f"-> Highest accuracy of {best_acc*100:.2f}% achieved in Epoch {best_epoch+1}")
