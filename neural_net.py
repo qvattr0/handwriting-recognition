@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import h5py
 import time
 
 from colorama import Fore, Style
@@ -171,6 +172,14 @@ class Network(object):
             test_data (list[tuple[int]], optional): Testing data to evaluate the network against. 
                 At the end of each epoch, the network's accuracy is evaluated and printed to the terminal. Defaults to None.
         """        
+        # resetting compute time because it is meant to measure the training duration for a single
+        self.compute_time = 0
+        
+        # saving the hyper-parameters for later use
+        self.epochs = epochs
+        self.batch_size = batch_size
+        self.learning_rate = learning_rate
+        self.trainingpool_size = len(training_data)
 
         # warn the user about unused data in case of a suboptimal batch size selection
         unused_data = len(training_data) % batch_size
@@ -210,6 +219,8 @@ class Network(object):
             if test_data:
                 epoch_end  = time.perf_counter()
                 training_duration = epoch_end - epoch_start
+                self.compute_time += training_duration
+
 
                 total_pass, accuracy = self.evaluate(test_data)
 
@@ -227,6 +238,45 @@ class Network(object):
         # once all the epochs were computed, find the epoch with the highest accuracy
         best_epoch = np.argmax(epoch_accuracies)
         best_acc   = epoch_accuracies[best_epoch]
+
+        # save the best accuracy for future use
+        self.best_acc = best_acc
         
         print("--------------------------------------------------")
         print(f"-> Highest accuracy of {best_acc*100:.2f}% achieved in Epoch {best_epoch+1}")
+
+    def save_data(self, label: str, notes: str):
+        """Saves the parameters and run properties of the network into an HDF file. The following network properties are saved:
+        - Layer structure
+        - Weights
+        - Biases
+        - Epochs used for training
+        - Batch size
+        - Learning rate
+        - Training pool size
+        - Network accuracy
+        - Compute time
+
+        Args:
+            label (str): name to be used when saving this run to the file       
+            notes (str): various annotations to be saved along with the data
+        """
+
+        with h5py.File('./data/networks_repo.h5', 'r+') as f:
+            grp_run = f.create_group(label)
+            grp_param = grp_run.create_group('parameters')
+            grp_param.create_dataset('layer structure', data=self.layer_sizes)
+            for i, (self.weights, self.biases) in enumerate(zip(self.weights, self.biases)):
+                layer = grp_param.create_group(f"layer{i}")
+                layer.create_dataset('weights', data=self.weights)
+                layer.create_dataset('biases',  data=self.biases)
+            
+            metrics = grp_run.create_group('metrics')
+            metrics.create_dataset('epochs', data=self.epochs)
+            metrics.create_dataset('batch size', data=self.batch_size)
+            metrics.create_dataset('learning rate', data=self.learning_rate)
+            metrics.create_dataset('training pool size', data=self.trainingpool_size)
+            metrics.create_dataset('best accuracy', data=self.best_acc)
+            metrics.create_dataset('compute time', data=self.compute_time)
+
+            grp_run.create_dataset('notes', data=notes)
