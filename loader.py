@@ -24,7 +24,6 @@ def load_data():
     # conformance to the output layer of the network
     # i.e.: "3" is [0 0 0 1 0 0 0 0 0 0]
     y_train_onehot = []
-    y_test_onehot = []
     
     for y in y_train:
         blank = [0] * 10
