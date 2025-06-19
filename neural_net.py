@@ -262,8 +262,13 @@ class Network(object):
             notes (str): various annotations to be saved along with the data
         """
 
-        with h5py.File('./data/networks_repo.h5', 'r+') as f:
+        with h5py.File('./data/networks_repo.h5', 'r+') as f:            # synthesizing the label
+            run_names = list(f.keys())
+            last_run  = int(run_names[-1][-1])
+
+            label = label + f"-run{last_run + 1}"
             grp_run = f.create_group(label)
+
             grp_param = grp_run.create_group('parameters')
             grp_param.create_dataset('layer structure', data=self.layer_sizes)
             for i, (self.weights, self.biases) in enumerate(zip(self.weights, self.biases)):
