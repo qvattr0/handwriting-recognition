@@ -5,8 +5,8 @@ import os
 training_data, testing_data = loader.load_data()
 
 # ============================== Parameter Space ============================= #
-net_structure = [784, 20, 10]
-epochs = 10
+net_structure = [784, 30, 10]
+epochs = 30
 batch_size = 10
 learning_rate = 3.0
 
