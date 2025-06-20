@@ -297,6 +297,8 @@ class Network(object):
                 return None
 
 
+        with h5py.File('./data/networks_repo.h5', 'r+') as f:
+            # synthesizing the label
             run_names = list(f.keys())
             last_run  = int(run_names[-1][-1])
 
