@@ -14,7 +14,6 @@ version = "1.0.0"
 network_gen = """
 Mark. 1: 1st generation MLP neural network that deploys randomized parameter initialization.
 """
-
 # ============================================================================ #
 
 net = Network(net_structure)
