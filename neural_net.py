@@ -254,7 +254,7 @@ class Network(object):
         print("--------------------------------------------------")
         print(f"-> Highest accuracy of {best_acc*100:.2f}% achieved in Epoch {best_epoch+1}")
 
-    def save_data(self, label: str, notes: str):
+    def save_data(self, label: str, notes: str, simple_save=False) -> None:
         """Saves the parameters and run properties of the network into an HDF file. The following network properties are saved:
         - Layer structure
         - Weights
@@ -266,12 +266,37 @@ class Network(object):
         - Network accuracy
         - Compute time
 
+        Also has a simple save mode that just saves the weights and biases for quickly transferring network parameters between systems. Simple save mode saves
+        the data either in the local `./data` folder or in the root directory of the script.
+
         Args:
             label (str): name to be used when saving this run to the file       
             notes (str): various annotations to be saved along with the data
+            simple_save (bool): activates the simple save mode that creates a HDF file only with weights and biases
         """
 
-        with h5py.File('./data/networks_repo.h5', 'r+') as f:            # synthesizing the label
+        if simple_save is True:
+            print("\ufed7 Saving data...")
+            print(Fore.YELLOW + "[Simple Mode]")
+
+            # check if the data directory exists
+            if os.path.isdir("./data"):
+                print(" ./data directory found")
+                path = f"./data/{label}"
+            else:
+                print(" ./data directory not found, saving in root")
+                path = label
+            
+            # saving the data
+            with h5py.File(path, "w") as f:
+                params = f.create_group('parameters')
+                params.create_dataset('weights', data=self.weights)
+                params.create_dataset('biases',  data=self.biases)
+
+                f.attrs["notes"] = notes
+                return None
+
+
             run_names = list(f.keys())
             last_run  = int(run_names[-1][-1])
 
