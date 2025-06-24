@@ -294,6 +294,8 @@ class Network(object):
 
                 # formatting the notes attribute
                 f.create_dataset('notes', data=notes)
+
+                print("󱣪 Data saved!")
                 return None
 
 
@@ -323,6 +325,8 @@ class Network(object):
             metrics.create_dataset('compute time', data=self.compute_time)
 
             grp_run.create_dataset('notes', data=notes)
+
+            print("󱣪 Data saved!")
     
     def load_net(self, source: str, label: Optional[str] = None):
         """Loads the parameters of a neural network from a HDF file that stores information about previous runs
