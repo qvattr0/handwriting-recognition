@@ -18,5 +18,4 @@ Mark. 1: 1st generation MLP neural network that deploys randomized parameter ini
 
 net = Network(net_structure)
 net.stochasticGD(epochs, batch_size, learning_rate, training_data, testing_data)
-net.save_data(f"mk{network_mk}-v{version}-mininet.h5", network_gen, simple_save=True)
-
+net.save_data(f"mk{network_mk}-v{version}", network_gen)
