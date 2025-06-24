@@ -270,7 +270,7 @@ class Network(object):
             notes (str): various annotations to be saved along with the data
             simple_save (bool): activates the simple save mode that creates a HDF file only with weights and biases
         """
-
+        print("\n\n")
         if simple_save is True:
             print("\ufed7 Saving data...")
             print(Fore.YELLOW + "[Simple Mode]")
@@ -294,6 +294,8 @@ class Network(object):
 
 
         with h5py.File('./data/networks_repo.h5', 'r+') as f:
+            print('󰳻 Saving data...')
+            print(Fore.YELLOW + " [In networks_repo.h5]" + Style.RESET_ALL)
             # synthesizing the label
             run_names = list(f.keys())
             last_run  = int(run_names[-1][-1])
