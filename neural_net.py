@@ -272,8 +272,8 @@ class Network(object):
         """
         print("\n\n")
         if simple_save is True:
-            print("\ufed7 Saving data...")
-            print(Fore.YELLOW + "[Simple Mode]")
+            print(" Saving data...")
+            print(Fore.YELLOW + "[Simple Mode]" + Style.RESET_ALL)
 
             # check if the data directory exists
             if os.path.isdir("./data"):
@@ -286,10 +286,13 @@ class Network(object):
             # saving the data
             with h5py.File(path, "w") as f:
                 params = f.create_group('parameters')
-                params.create_dataset('weights', data=self.weights)
-                params.create_dataset('biases',  data=self.biases)
+                for i, (self.weights, self.biases) in enumerate(zip(self.weights, self.biases)):
+                    layer = params.create_group(f"layer{i}")
+                    layer.create_dataset('weights', data=self.weights)
+                    layer.create_dataset('biases',  data=self.biases)
 
-                f.attrs["notes"] = notes
+                # formatting the notes attribute
+                f.create_dataset('notes', data=notes)
                 return None
 
 
@@ -319,3 +322,4 @@ class Network(object):
             metrics.create_dataset('compute time', data=self.compute_time)
 
             grp_run.create_dataset('notes', data=notes)
+    
