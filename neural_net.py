@@ -333,6 +333,25 @@ class Network(object):
 
         Args:
             source (str): the path to the file with the network
-            label  (str): 
+            label  (str): label of the run if you're inputting from a source with multiple network entries
         """
+
+        with h5py.File(source, 'r') as f:
+            # choosing the proper depth depending on whether we're using a repo or singleton save file
+            netconfig = f[label] if label else f
+
+            # jump to parameters group
+            params = netconfig["parameters"] # type: ignore
+            assert isinstance(params, h5py.Group)
+
+            # initializing containers and extracting data from save file
+            self.weights = []
+            self.biases  = []
+
+            for layer in params.values():
+            
+                self.weights.append(layer['weights'][...])
+                self.biases.append(layer['biases'][...])
+
+        print("󱣪 Network Loaded!")
         return None        
