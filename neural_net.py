@@ -305,7 +305,7 @@ class Network(object):
             last_run  = int(run_names[-1][-1])
 
             label = label + f"-run{last_run + 1}"
-            grp_run = f.create_group(label)
+            grp_run = f.create_group(label, track_order=True)
 
             grp_param = grp_run.create_group('parameters')
             grp_param.create_dataset('layer structure', data=self.layer_sizes)
