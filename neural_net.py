@@ -3,6 +3,7 @@ import random
 import h5py
 import copy
 import time
+import os
 
 from colorama import Fore, Style
 from typing import Optional
@@ -323,3 +324,11 @@ class Network(object):
 
             grp_run.create_dataset('notes', data=notes)
     
+    def load_net(self, source: str, label: Optional[str] = None):
+        """Loads the parameters of a neural network from a HDF file that stores information about previous runs
+
+        Args:
+            source (str): the path to the file with the network
+            label  (str): 
+        """
+        return None        
