@@ -7,10 +7,6 @@ import time
 from colorama import Fore, Style
 from typing import Optional
 
-# Input data parameters
-image_res = 28*28
-
-
 # Neural network abstraction
 class Network(object):
 
