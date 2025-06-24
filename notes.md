@@ -17,4 +17,3 @@
 - [ ] Investigate alternative activation functions that may be more suitable for the task
 - [ ] Determine if a better cost function can be used for training
 - [x] Rename the `training_images` and `training_labels` to `sample` and `labels` for increased clarity
-- [ ] Place version mode and notes into the attributes section of each run entry
