@@ -42,6 +42,8 @@ Thumbs.db
 
 # Folders #
 ###########
+
 .venv/
 __pycache__/
+source/
 data/mk1-v1.0.0-mininet.h5
