@@ -44,3 +44,4 @@ Thumbs.db
 ###########
 .venv/
 __pycache__/
+data/mk1-v1.0.0-mininet.h5
