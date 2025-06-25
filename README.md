@@ -14,6 +14,7 @@ The neural network architecture used, as mentioned prior, is a multi-layer perce
 - Randomized weight and bias initialization
 - Sigmoid activation function
 - Quadratic (squared-error) cost function
+- Mini-batch training sample processing
 
 ## Quality-of-life
 Various functions were implemented for accelerating network iteration and analysis workflows. Some of those include:
