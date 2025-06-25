@@ -19,4 +19,9 @@ The neural network architecture used, as mentioned prior, is a multi-layer perce
 ## Quality-of-life
 Various functions were implemented for accelerating network iteration and analysis workflows. Some of those include:
 - Saving network parameters into an HDF file for future reference and analysis
+  
+    > [!WARNING]
+    > Since the program adds new files to directories and may modify already existing files, make sure that the directory in which the script is run provides all
+    > the necessary permissions for the aforementioned operations.
+
 - Loading weight and bias parameters from a previously trained network
