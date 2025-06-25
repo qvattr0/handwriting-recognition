@@ -329,7 +329,9 @@ class Network(object):
             print("󱣪 Data saved!")
     
     def load_data(self, source: str, label: Optional[str] = None):
-        """Loads the parameters of a neural network from a HDF file that stores information about previous runs
+        """Loads the parameters of a neural network from a HDF file that stores information about previous runs or a single run.
+
+        Upon loading in a network may also change the internal network structure assigned during the creation of the network object.
 
         Args:
             source (str): the path to the file with the network
@@ -348,8 +350,13 @@ class Network(object):
             self.weights = []
             self.biases  = []
 
-            for layer in params.values():
+            # warn the user if the initialized layer structure of the network is different to that of network that is being loaded in
+            if params["layer structure"] != self.layer_sizes:
+                print(Fore.RED + ' WARNING:' + Style.RESET_ALL + 'the layer structure of the loaded in network does not match the structure with which this network was initialized. Overwriting the initialized structure.')
+                self.layer_sizes = params["layer structure"]
             
+            for layer in params.values():
+                
                 self.weights.append(layer['weights'][...])
                 self.biases.append(layer['biases'][...])
 
