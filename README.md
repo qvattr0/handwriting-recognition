@@ -13,7 +13,7 @@ The primary purpose of this project is to act as a "playground" for exploring th
 The neural network architecture used, as mentioned prior, is a multi-layer perceptron. The network utilizes:
 - Randomized weight and bias initialization
 - Sigmoid activation function
-- Square-function cost calculation
+- Quadratic (squared-error) cost function
 
 ## Quality-of-life
 Various functions were implemented for accelerating network iteration and analysis workflows. Some of those include:
