@@ -287,6 +287,7 @@ class Network(object):
             # saving the data
             with h5py.File(path, "w") as f:
                 params = f.create_group('parameters')
+                params.create_dataset('layer structure', data=self.layer_sizes)
                 for i, (self.weights, self.biases) in enumerate(zip(self.weights, self.biases)):
                     layer = params.create_group(f"layer{i}")
                     layer.create_dataset('weights', data=self.weights)
