@@ -328,7 +328,7 @@ class Network(object):
 
             print("󱣪 Data saved!")
     
-    def load_net(self, source: str, label: Optional[str] = None):
+    def load_data(self, source: str, label: Optional[str] = None):
         """Loads the parameters of a neural network from a HDF file that stores information about previous runs
 
         Args:
