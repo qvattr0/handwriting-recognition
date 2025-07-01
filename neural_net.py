@@ -354,7 +354,7 @@ class Network(object):
             # warn the user if the initialized layer structure of the network is different to that of network that is being loaded in
             if params["layer structure"] != self.layer_sizes:
                 print(Fore.RED + ' WARNING:' + Style.RESET_ALL + 'the layer structure of the loaded in network does not match the structure with which this network was initialized. Overwriting the initialized structure.')
-                self.layer_sizes = params["layer structure"]
+                self.layer_sizes = params.require_dataset('layer structure', list[int], int)
             
             for layer in params.values():
                 
