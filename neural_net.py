@@ -24,8 +24,11 @@ class Network(object):
         """        
         self.num_layers = len(struct)
         self.layer_sizes = struct
-        self.weights = [np.random.randn(y, x) for y, x in zip(struct[1:], struct[:-1])]
-        self.biases =  [np.random.randn(x, 1) for x in struct[1:]]
+        self.default_weight_initializer()
+    
+    def default_weight_initializer(self):
+        self.weights = [np.random.randn(y, x) for y, x in zip(self.layer_sizes[1:], self.layer_sizes[:-1])]
+        self.biases =  [np.random.randn(x, 1) for x in self.layer_sizes[1:]]
 
     @staticmethod
     def sigmoid(z):
