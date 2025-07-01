@@ -1,6 +1,6 @@
 import numpy as np
 
-class crossentropy_cost():
+class crossentropy():
         """Cross-entropy cost function calculation wrapper
 
         Returns:
@@ -11,7 +11,7 @@ class crossentropy_cost():
              return "Cross-entropy Cost Function"
         
         @staticmethod
-        def calc(activ, expected):
+        def fn(activ, expected):
             a = activ; y = expected
             return np.sum(np.nan_to_num(-y*np.log(a) - (1-y)*np.log(1-a)))
 
@@ -19,7 +19,7 @@ class crossentropy_cost():
         def delta(z, a, expected):
             return a - expected
         
-class quadratic_cost():
+class quadratic():
     """A simple quadratic cost function calculation wrapper.
     """
     
@@ -27,7 +27,7 @@ class quadratic_cost():
     def name():
          return "Quadratic Cost Function"
     @staticmethod 
-    def calc(activ, expected):
+    def fn(activ, expected):
         """Returns the quadratic cost of the network output
 
         Args:
