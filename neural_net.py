@@ -11,7 +11,7 @@ from typing import Optional
 # Neural network abstraction
 class Network(object):
 
-    def __init__(self, struct):     
+    def __init__(self, struct: list[int]):     
         """Neural network initialization constructor
 
         Args:
