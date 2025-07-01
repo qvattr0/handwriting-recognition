@@ -8,9 +8,11 @@ import os
 from colorama import Fore, Style
 from typing import Optional
 
+from cost_functions import crossentropy
+
 # Neural network abstraction
 class Network(object):
-
+    
     def __init__(self, struct: list[int]):     
         """Neural network initialization constructor
 
@@ -24,9 +26,10 @@ class Network(object):
         """        
         self.num_layers = len(struct)
         self.layer_sizes = struct
-        self.default_weight_initializer()
+        self.default_parameter_initializer()
+        self.cost = crossentropy
     
-    def default_weight_initializer(self):
+    def default_parameter_initializer(self):
         self.weights = [np.random.randn(y, x) for y, x in zip(self.layer_sizes[1:], self.layer_sizes[:-1])]
         self.biases =  [np.random.randn(x, 1) for x in self.layer_sizes[1:]]
 
@@ -112,11 +115,9 @@ class Network(object):
 
         # now, activations of all the neurons are known
 
-        cost_deriv = activs[-1] - expected
-        
-        # using equation #1 of backpropagation
-        # calculate the error of the output layer
-        error = cost_deriv * self.sigmoid_prime(z[-1])
+        # calculating the error of the output layer
+        # using equation #1 of the backpropagation rule
+        error = self.cost.delta(z[-1], activs[-1], expected)
 
         # relating the error to part. deriv. of b
         grad_b[-1] = error
